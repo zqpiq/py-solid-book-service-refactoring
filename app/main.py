@@ -78,11 +78,11 @@ class BookSerializer:
 def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
     for cmd, method_type in commands:
         if cmd == "display":
-            BookDisplay(book, method_type)
+            BookDisplay(book, method_type).display()
         elif cmd == "print":
-            BookPrint(book, method_type)
+            BookPrint(book, method_type).print_book()
         elif cmd == "serialize":
-            BookSerializer(book, method_type)
+            BookSerializer(book, method_type).serialize()
 
 
 if __name__ == "__main__":
