@@ -1,5 +1,6 @@
 from app.models.models import Book
-from app.serializers.serializers import JsonSerializer, XmlSerializer
+from app.serializers.json_serializer import JsonSerializer
+from app.serializers.xml_serializer import XmlSerializer
 from app.strategies.display import ConsoleDisplay, ReverseDisplay
 from app.strategies.print import ConsolePrint, ReversePrint
 

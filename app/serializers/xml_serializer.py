@@ -1,19 +1,7 @@
-import json
-from abc import ABC, abstractmethod
 from xml.etree import ElementTree
 
 from app.models.models import Book
-
-
-class SerializerStrategy(ABC):
-    @abstractmethod
-    def serialize(self, book: Book) -> str:
-        pass
-
-
-class JsonSerializer(SerializerStrategy):
-    def serialize(self, book: Book) -> str:
-        return json.dumps({"title": book.title, "content": book.content})
+from app.serializers.base import SerializerStrategy
 
 
 class XmlSerializer(SerializerStrategy):
