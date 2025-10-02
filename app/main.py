@@ -64,15 +64,33 @@ class XmlSerializer(SerializerStrategy):
         return ElementTree.tostring(root, encoding="unicode")
 
 
-def main(book: Book, commands: list[tuple[str, object]]) -> None | str:
+def main(book: Book, commands: list[tuple[str, str]]) -> None | str:
     result = None
-    for cmd, strategy in commands:
+    for cmd, method_type in commands:
         if cmd == "display":
-            strategy.display(book)
+            if method_type == "console":
+                ConsoleDisplay().display(book)
+            elif method_type == "reverse":
+                ReverseDisplay().display(book)
+            else:
+                raise ValueError(f"Unknown display type: {method_type}")
+
         elif cmd == "print":
-            strategy.print(book)
+            if method_type == "console":
+                ConsolePrint().print(book)
+            elif method_type == "reverse":
+                ReversePrint().print(book)
+            else:
+                raise ValueError(f"Unknown print type: {method_type}")
+
         elif cmd == "serialize":
-            result = strategy.serialize(book)
+            if method_type == "json":
+                result = JsonSerializer().serialize(book)
+            elif method_type == "xml":
+                result = XmlSerializer().serialize(book)
+            else:
+                raise ValueError(f"Unknown serialize type: {method_type}")
+
     return result
 
 
@@ -82,8 +100,8 @@ if __name__ == "__main__":
         main(
             sample_book,
             [
-                ("display", ReverseDisplay()),
-                ("serialize", XmlSerializer())
+                ("display", "reverse"),
+                ("serialize", "xml")
             ]
         )
     )
